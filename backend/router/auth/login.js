@@ -2,13 +2,10 @@ const express = require('express');
 const {Router} = require('express');
 let {z}= require('zod')
 let bcrypt= require('bcrypt')
-const mongoose = require('mongoose')
 const jwt = require("jsonwebtoken")
-SECRET = "HelloWorld"
 const {    UserModel,ItemsModel } = require('./backend/db/db')
 
 
-mongoose.connect("mongodb+srv://akhilbaburaj06_db_user:E5V577VG1ntGmO4J@cluster0.vni0ifc.mongodb.net/e_com/");
 
 
 const LoginRouter = Router();
@@ -38,7 +35,7 @@ if (!userDetails) {
             {
                 id: user._id.toString(),
             },
-        SECRET
+        process.env.SECRET
         );
 
         res.json({

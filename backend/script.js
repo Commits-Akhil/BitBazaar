@@ -1,6 +1,9 @@
 let express = require('express')
-let {LoginRouter} = require("./router/login")
-let {RegisterRouter} = require("./router/register")
+let {LoginRouter} = require("./router/auth/login")
+let {RegisterRouter} = require("./router/auth/register")
+let {ShopRouter} = require("./router/shop/shop")
+const mongoose = require('mongoose')
+
 let app=express();
 app.use(express.json())
 
@@ -8,13 +11,17 @@ app.use("/login",LoginRouter)
 
 app.use("/register",RegisterRouter)
 
-app.post("/products",(req,res)=>{
-    
-})
+app.use("/shop",ShopRouter)
 
-app.post("/cart",(req,res)=>{
-    
-})
+ async function main(){
+    try{
+       await mongoose.connect(process.env.mongoUrl);
 
+        app.listen(3000);
 
-app.listen(3000);
+    }catch(e){
+        console.log(`Error! Couldnot connect to database`);
+    }
+}
+ main();
+
