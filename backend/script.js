@@ -12,7 +12,7 @@ app.use("/login",LoginRouter)
 
 app.use("/register",RegisterRouter)
 
-app.use("/",ShopRouter)
+app.use("/shop",ShopRouter)
 
 app.use("/cart",CartRouter)
 

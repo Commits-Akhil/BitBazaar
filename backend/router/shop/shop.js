@@ -6,11 +6,15 @@ const {  UserModel,ItemsModel } = require('./backend/db/db')
 const ShopRouter = Router();
 
 ShopRouter.get("/",async (req,res)=>{
-   try{ let products = await ItemsModel.find();
-res.status(200).json(products);   
-}catch(e){
-    res.status(500).json(`Error${e}`);
+   let search= req.query.search;
+   if(search){
+    let products = await ItemsModel.find({
+        itemName:{$regex:search , $option: i}
+    })
+    return res.json({products})
 }
+   let products = await ItemsModel.find();
+   res.json({products});
 })
 
 ShopRouter.post("/",async(req,res)=>{

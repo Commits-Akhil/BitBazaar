@@ -5,20 +5,13 @@ let bcrypt= require('bcrypt')
 const jwt = require("jsonwebtoken")
 const {    UserModel,ItemsModel } = require('./backend/db/db')
 
-
-
-
 const LoginRouter = Router();
-
-
-
 
 LoginRouter.post("/",async (req,res)=>{
     let email = req.body.email;
     let password = req.body.password;
 
-    let hashedpassword =await bcrypt.hash(password,5);
-    let userDetails = UserModel.findOne({
+    let userDetails = await UserModel.findOne({
         email:email
     })
 
@@ -33,7 +26,7 @@ if (!userDetails) {
     if (passwordMatch) {
         const token = jwt.sign(
             {
-                id: user._id.toString(),
+                id: userDetails._id.toString(),
             },
         process.env.SECRET
         );
